@@ -12,7 +12,10 @@ public class TimerManager : MonoBehaviour {
 	public TMP_Text timerTxt;
 	public TMP_Text shadowTxt;
 
+	GameManager GM;
+
 	void Start() {
+		GM = GameManager.instance;
 		StartCoroutine(TimerCoroutine());
 	}
 
@@ -24,6 +27,7 @@ public class TimerManager : MonoBehaviour {
 		}
 
 		if (totalTime <= 0) {
+			GM.DoTimesUp();
 			//MovementScript.inputEnabled = false;
 			//pointsTxt.text = "Você fez " + PointsScript.points.ToString() + " pontos!";
 			//starsTxt.text = "Seu hotel recebeu " + (((PointsScript.points * 100) / 790) / 20).ToString() + " estrelas!";

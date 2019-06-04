@@ -70,9 +70,9 @@ public class MoveTrampoline : MonoBehaviour {
 						score -= fall.Pontuation;
 						manager.UpdateUI(score);
 						if (score <= 0) {
-							manager.DoGameOver();
+							manager.DoTimesUp();
 						}
-					}else manager.DoGameOver();
+					}else manager.DoTimesUp();
 				break;
 				case FallingType.Person:
 					score += fall.Pontuation;

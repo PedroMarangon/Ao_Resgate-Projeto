@@ -31,7 +31,7 @@ public class Fall : MonoBehaviour {
 			manager.UpdateUI(trampoline.score);
 
 			if(trampoline.score <= 0 ) {
-				manager.DoGameOver();
+				manager.DoTimesUp();
 			}
 
 			Destroy(gameObject);

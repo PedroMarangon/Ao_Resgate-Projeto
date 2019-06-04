@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
 	}
 	#endregion
 
-	public GameObject GameOver;
+	public GameObject TimesUp;
 	[BoxGroup("Score")] public TMP_Text shadowText;
 	[BoxGroup("Score")] public TMP_Text scoreText;
 	
@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour {
 		shadowText.text = score.ToString();
 	}
 
-	public void DoGameOver() {
+	public void DoTimesUp() {
 		Time.timeScale = 0;
-		GameOver.SetActive(true);
+		TimesUp.SetActive(true);
 	}
 
 }
