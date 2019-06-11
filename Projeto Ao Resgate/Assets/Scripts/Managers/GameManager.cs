@@ -14,21 +14,30 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		instance = this;
+
+		if(PlayerPrefs.GetInt("high") != 0){
+			highscore = PlayerPrefs.GetInt("high");
+		}
 	}
 	#endregion
 
 	public GameObject TimesUp;
+	public int points,highscore;
 	[BoxGroup("Score")] public TMP_Text shadowText;
 	[BoxGroup("Score")] public TMP_Text scoreText;
 	
 	public void UpdateUI(int score) {
 		scoreText.text = score.ToString();
 		shadowText.text = score.ToString();
+		points = score;
 	}
 
 	public void DoTimesUp() {
 		Time.timeScale = 0;
 		TimesUp.SetActive(true);
+		if(points>highscore)
+			PlayerPrefs.SetInt("high",points);
+			highscore=points;
 	}
 
 }

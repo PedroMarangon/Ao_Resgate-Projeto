@@ -5,6 +5,7 @@ using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using TMPro;
 
 public class MenuScript : MonoBehaviour {
 
@@ -20,11 +21,17 @@ public class MenuScript : MonoBehaviour {
 	[BoxGroup("MUSIC")]public GameObject mscOn;
 	[BoxGroup("MUSIC")]public GameObject mscOff;
 
+	[SerializeField]TMP_Text[] highscore;
+
 
 
 	// Use this for initialization
 	void Start () {
 		GoToMain();
+		for(int i=0;i<highscore.Length;i++){
+			highscore[i].text = PlayerPrefs.GetInt("high").ToString();
+		}
+		
 	}
 
 	public void GoToSettings(){
