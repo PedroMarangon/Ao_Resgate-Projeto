@@ -13,7 +13,7 @@ public class Falling : ScriptableObject {
 	[BoxGroup("BOX COLLIDER")] public Vector2 offset;
 	[BoxGroup("BOX COLLIDER")] public Vector2 size = Vector2.one;
 	[MinValue(0)] public int Pontuation;
-	public int rotateSpeed;
+	public float rotateSpeed;
 	#endregion
 }
 

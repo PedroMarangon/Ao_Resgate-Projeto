@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1da762b4ce8a984ebe44cd540e45bbf, type: 3}
-  m_Name: Char02
+  m_Name: Patrick
   m_EditorClassIdentifier: 
   type: 0
-  sprite: {fileID: 21300000, guid: 16c67df23b8f32b4ba13bf5f09ea8975, type: 3}
-  colorMultiplier: {r: 1, g: 0.29411763, b: 0.29411763, a: 1}
+  sprite: {fileID: 21300000, guid: 305ebbea8e691764e97908ea91bb434e, type: 3}
+  colorMultiplier: {r: 1, g: 1, b: 1, a: 1}
   offset: {x: 0, y: 0}
-  size: {x: 0.3163644, y: 0.1761022}
-  Pontuation: 30
-  rotateSpeed: 2
+  size: {x: 0.124, y: 0.376}
+  Pontuation: 35
+  rotateSpeed: 8

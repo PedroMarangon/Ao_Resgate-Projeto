@@ -23,9 +23,13 @@ public class MoveTrampoline : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+#if UNITY_EDITOR
+		PlayerPrefs.SetInt("ctrl", 1);
+#endif
 		manager = GameManager.instance;
 		Time.timeScale = 1;
 		UI.SetActive(PlayerPrefs.GetInt("ctrl") == 1);//If ctrl=1 (buttons), sets to true
+		//UI.SetActive(!hasAccelerometer);//If ctrl=1 (buttons), sets to true
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	}
 	
@@ -37,7 +41,7 @@ public class MoveTrampoline : MonoBehaviour {
 				Vector2 move = Input.acceleration * speed * Time.deltaTime;
 				move.y = 0;
 				transform.Translate(move);
-				transform.position = new Vector3(Mathf.Clamp(transform.position.x,-.58f, .58f),transform.position.y,transform.position.z);
+				transform.position = new Vector3(Mathf.Clamp(transform.position.x,-.8f, .8f),transform.position.y,transform.position.z);
 				}
 			} else {
 				Debug.Log("Don't supports Accelerometer");
@@ -46,11 +50,11 @@ public class MoveTrampoline : MonoBehaviour {
 		else {
 			if (left.buttonPressed) {
 				transform.Translate(-(speed * Time.deltaTime), 0, 0);
-				transform.position = new Vector3(Mathf.Clamp(transform.position.x,-.58f, .58f),transform.position.y,transform.position.z);
+				transform.position = new Vector3(Mathf.Clamp(transform.position.x,-.8f, .8f),transform.position.y,transform.position.z);
 			} else
 			if (right.buttonPressed) {
 				transform.Translate(speed * Time.deltaTime, 0, 0);
-				transform.position = new Vector3(Mathf.Clamp(transform.position.x, -.58f, .58f), transform.position.y, transform.position.z);
+				transform.position = new Vector3(Mathf.Clamp(transform.position.x, -.8f, .8f), transform.position.y, transform.position.z);
 			}
 
 		}
@@ -58,6 +62,10 @@ public class MoveTrampoline : MonoBehaviour {
 
 	public void RestartScene() {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
+	public void MenuScene() {
+		SceneManager.LoadScene("Menu");
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

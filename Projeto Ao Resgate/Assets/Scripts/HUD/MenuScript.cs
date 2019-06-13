@@ -73,6 +73,9 @@ public class MenuScript : MonoBehaviour {
 	}
 
 	public void SetControl() {
+		if (controls == ControlType.Buttons && !SystemInfo.supportsAccelerometer)
+			return;
+
 		controls = (controls == ControlType.Accelerometer) ? ControlType.Buttons : ControlType.Accelerometer;
 		controlText.text = controls.ToString();
 		PlayerPrefs.SetInt("ctrl", (int)controls);
