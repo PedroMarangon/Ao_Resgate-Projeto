@@ -25,15 +25,14 @@ public class MoveTrampoline : MonoBehaviour {
 	void Start () {
 		manager = GameManager.instance;
 		Time.timeScale = 1;
-		UI.SetActive(!hasAccelerometer);
+		UI.SetActive(PlayerPrefs.GetInt("ctrl") == 1);//If ctrl=1 (buttons), sets to true
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (hasAccelerometer) {
+		if (PlayerPrefs.GetInt("ctrl") == 0) {
 			if (SystemInfo.supportsAccelerometer) {
-				Debug.Log("Supports Accelerometer");
 				if (Input.acceleration.x > minValueForMove || Input.acceleration.x < -minValueForMove) {
 				Vector2 move = Input.acceleration * speed * Time.deltaTime;
 				move.y = 0;
