@@ -25,10 +25,13 @@ public class GameManager : MonoBehaviour {
 	public int points,highscore;
 	[BoxGroup("Score")] public TMP_Text shadowText;
 	[BoxGroup("Score")] public TMP_Text scoreText;
-	
+
+	public TMP_Text scoreSettings;
+
 	public void UpdateUI(int score) {
 		scoreText.text = score.ToString();
 		shadowText.text = score.ToString();
+		scoreSettings.text = score.ToString();
 		points = score;
 	}
 

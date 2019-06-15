@@ -24,15 +24,17 @@ public class Fall : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.CompareTag("Respawn")) {
 			MoveTrampoline trampoline = FindObjectOfType<MoveTrampoline>();
-			
-			trampoline.score = (falling.type == FallingType.Person) ?
-				(trampoline.score-falling.Pontuation) : trampoline.score;
 
-			manager.UpdateUI(trampoline.score);
+			bool tiraPontos = (PlayerPrefs.GetFloat("power01") != 4) || (PlayerPrefs.GetFloat("power02") != 4);
+
+			trampoline.score = (falling.type == FallingType.Person && tiraPontos) ?
+				(trampoline.score-falling.Pontuation) : trampoline.score;
 
 			if(trampoline.score <= 0) {
 				trampoline.score = 0;
 			}
+
+			manager.UpdateUI(trampoline.score);
 
 			Destroy(gameObject);
 		}

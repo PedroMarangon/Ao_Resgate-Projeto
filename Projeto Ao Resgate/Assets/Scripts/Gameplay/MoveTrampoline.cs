@@ -11,7 +11,8 @@ public class MoveTrampoline : MonoBehaviour {
 
 	GameManager manager;
 	public GameObject UI;
-	[BoxGroup("Global variables")] public float speed = 2f;
+	public float growScale = 1.5f;
+	[BoxGroup("Global variables")] public float speed = 5f;
 	[BoxGroup("Global variables")] public int score = 0;
 	[BoxGroup("Global variables")] public float timeToDestroy = .5f;
 	[BoxGroup("Accelerometer")][InfoBox("This is the variables that works with " +
@@ -26,6 +27,9 @@ public class MoveTrampoline : MonoBehaviour {
 #if UNITY_EDITOR
 		PlayerPrefs.SetInt("ctrl", 1);
 #endif
+		if (PlayerPrefs.GetInt("power01") == 1 || PlayerPrefs.GetInt("power02") == 1)
+			transform.localScale *= growScale;
+
 		manager = GameManager.instance;
 		Time.timeScale = 1;
 		UI.SetActive(PlayerPrefs.GetInt("ctrl") == 1);//If ctrl=1 (buttons), sets to true
@@ -35,6 +39,12 @@ public class MoveTrampoline : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+
+#if UNITY_EDITOR
+		PlayerPrefs.SetInt("ctrl", 1);
+#endif
+
 		if (PlayerPrefs.GetInt("ctrl") == 0) {
 			if (SystemInfo.supportsAccelerometer) {
 				if (Input.acceleration.x > minValueForMove || Input.acceleration.x < -minValueForMove) {
@@ -77,12 +87,16 @@ public class MoveTrampoline : MonoBehaviour {
 						score -= fall.Pontuation;
 						manager.UpdateUI(score);
 						if (score <= 0) {
-							manager.DoTimesUp();
+							score = 0;
 						}
-					}else manager.DoTimesUp();
+					}//else manager.DoTimesUp();
 				break;
 				case FallingType.Person:
-					score += fall.Pontuation;
+					int pont = fall.Pontuation;
+					if((PlayerPrefs.GetFloat("power01") == 2) || (PlayerPrefs.GetFloat("power02") == 2)) {
+						pont *= 2;
+					}
+					score += pont;
 					manager.UpdateUI(score);
 				break;
 			}

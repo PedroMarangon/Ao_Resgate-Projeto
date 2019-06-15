@@ -4,15 +4,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
+using NaughtyAttributes;
+using TMPro;
+using UnityEngine.Audio;
 
 public class PauseButton : MonoBehaviour {
 
 	public GameObject pauseScreen;
 	[SerializeField]private float offset;
+	[SerializeField]private float settings_offset;
 	[SerializeField]private float duration;
 	private float originalY;
 
-	//public SceneAsset menuScene;
+	[BoxGroup("Audio")] public AudioMixer mixer;
+	[Space]
+	[BoxGroup("Audio")] public GameObject sfxOn;
+	[BoxGroup("Audio")] public GameObject sfxOff;
+	[Space]
+	[BoxGroup("Audio")] public GameObject mscOn;
+	[BoxGroup("Audio")] public GameObject mscOff;
+
+	[BoxGroup("Controls")] public ControlType controls;
+	[BoxGroup("Controls")] public TMP_Text controlText;
 
 	void Start () {
 		Time.timeScale = 1;
@@ -29,9 +43,11 @@ public class PauseButton : MonoBehaviour {
 		RectTransform rect = pauseScreen.GetComponent<RectTransform>();
 		if (active) rect.DOMoveY(0 + offset, duration).OnComplete(() => SetScale(0));
 		else {
-			Debug.Log("false");
-			rect.DOMoveY(-1280, duration).OnComplete(() => SetScale(1));
-			Debug.Log("aaa");
+
+			Time.timeScale = 1;
+			//Debug.Log("false");
+			rect.DOMoveY(-1280-duration, duration).OnComplete(() => SetScale(1));
+			//Debug.Log("aaa");
 		}
 	}
 
@@ -44,8 +60,50 @@ public class PauseButton : MonoBehaviour {
 		GetRectTransform(false);
 	}
 
+	public void Settings() {
+		//Time.timeScale = 1;
+		
+		RectTransform rect = pauseScreen.GetComponent<RectTransform>().GetChild(0).GetComponent<RectTransform>();
+		rect.localPosition = new Vector3(rect.localPosition.x - 720, rect.localPosition.y, rect.localPosition.z);
+	}
+
+	public void Back() {
+		//Time.timeScale = 1;
+		RectTransform rect = pauseScreen.GetComponent<RectTransform>().GetChild(0).GetComponent<RectTransform>();
+		rect.localPosition = new Vector3(rect.localPosition.x + 720, rect.localPosition.y, rect.localPosition.z);
+		
+	}
+
 	public void GoToMenu() {
 		Debug.Log("Loaded Menu Scene");
-		//SceneManager.LoadScene(menuScene.name);
+		SceneManager.LoadScene("Menu");
 	}
+
+
+	#region Settings
+	public void SetMusicVolume(bool state) {
+		mscOn.SetActive(state);
+		mscOff.SetActive(!state);
+		mixer.SetFloat("musicVolume", (state) ? 0 : -80);
+	}
+
+	public void SetSFXVolume(bool state) {
+		sfxOn.SetActive(state);
+		sfxOff.SetActive(!state);
+		mixer.SetFloat("sfxVolume", (state) ? 0 : -80);
+	}
+
+	public void SetControl() {
+		if (controls == ControlType.Buttons && !SystemInfo.supportsAccelerometer)
+			return;
+
+		controls = (controls == ControlType.Accelerometer) ? ControlType.Buttons : ControlType.Accelerometer;
+		controlText.text = controls.ToString();
+
+		FindObjectOfType<MoveTrampoline>().UI.SetActive(controls == ControlType.Buttons);
+
+		PlayerPrefs.SetInt("ctrl", (int)controls);
+	}
+	#endregion
+
 }
