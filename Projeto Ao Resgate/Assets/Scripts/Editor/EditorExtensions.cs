@@ -2,11 +2,11 @@
 using UnityEngine;
 using UnityEditor;
 
-public class EditorExtensions {
+public class EditorExtensions : EditorWindow {
 
 	[MenuItem("Edit/Delet All PlayerPrefs")]
-    private static void DeletePlayerPrefs(){
-        PlayerPrefs.DeleteAll();
-    }
-    
+	private static void DeletePlayerPrefs() {
+		PlayerPrefs.DeleteAll();
+	}
+
 }

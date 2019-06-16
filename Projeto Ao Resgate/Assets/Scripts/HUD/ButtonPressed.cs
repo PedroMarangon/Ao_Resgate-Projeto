@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using UnityEngine.EventSystems;
 
 public class ButtonPressed : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
 
 	public bool buttonPressed;
+	public AudioSource buttonPressAudio;
 
 	public Sprite down, up;
 
 	public void OnPointerDown(PointerEventData eventData) {
+		buttonPressAudio.Play();
 		buttonPressed = true;
 		GetComponent<Image>().sprite = down;
 	}
