@@ -35,7 +35,6 @@ public class Fall : MonoBehaviour {
 			}
 			//Update the UI
 			manager.UpdateUI(trampoline.score);
-
 			Destroy(gameObject);
 		}
 	}

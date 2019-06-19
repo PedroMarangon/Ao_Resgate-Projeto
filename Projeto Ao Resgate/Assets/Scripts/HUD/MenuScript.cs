@@ -6,7 +6,6 @@ using NaughtyAttributes;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using TMPro;
-using System;
 
 public class MenuScript : MonoBehaviour {
 
@@ -22,7 +21,7 @@ public class MenuScript : MonoBehaviour {
 
 
 	[BoxGroup("HUD Movement")][InfoBox("Put the X/Y/Z values in the order that" +
-											"the screens are in the Scene View")] public Vector3 xValues;
+						"the screens are in the Scene View")] public Vector3 xValues;
 	[BoxGroup("HUD Movement")]public float MoveDuration = .5f;
 	[BoxGroup("HUD Movement")]public RectTransform HUD;
 

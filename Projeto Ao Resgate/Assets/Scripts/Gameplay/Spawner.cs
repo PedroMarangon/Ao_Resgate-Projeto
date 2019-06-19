@@ -22,8 +22,7 @@ public class Spawner : MonoBehaviour {
 		originalTime = timeToFall;
 		timeToFall *= 10;
 	}
-
-	// Update is called once per frame
+	
 	void Update () {
 		//First, check if the game isn't paused
 		if (Time.timeScale != 0) {

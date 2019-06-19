@@ -12,12 +12,6 @@ public class PauseButton : MonoBehaviour {
 
 	public GameObject pauseScreen;
 
-	//all of this is for the transitions
-	[SerializeField]private float offset;
-	[SerializeField]private float settings_offset;
-	[SerializeField]private float duration;
-	private float originalY;
-
 	[BoxGroup("Audio")] public AudioMixer mixer;
 	[BoxGroup("Audio")] public AudioSource source;
 
@@ -40,14 +34,13 @@ public class PauseButton : MonoBehaviour {
 	void Start () {
 		Time.timeScale = 1;
 		sources = new List<AudioSource>();
-		originalY = pauseScreen.GetComponent<RectTransform>().localPosition.y;
 		pauseScreen.SetActive(false);
 	}
 	
 	public void Pause () {
 		source.Play();
 		pauseScreen.SetActive(true);
-		GetRectTransform(true);
+
 		if (sources.Count > 0) sources.Clear();
 
 		sources = FindObjectsOfType<AudioSource>().ToList();
@@ -55,25 +48,11 @@ public class PauseButton : MonoBehaviour {
 		foreach (AudioSource source in sources) {
 			source.Pause();
 		}
+		Time.timeScale = 0;
 	}
-
-	private void GetRectTransform(bool active) {
-		RectTransform rect = pauseScreen.GetComponent<RectTransform>();
-		if (active) rect.DOMoveY(0 + offset, duration).OnComplete(() => SetScale(0));
-		else {
-			Time.timeScale = 1;
-			rect.DOMoveY(-1280-duration, duration).OnComplete(() => SetScale(1));
-		}
-	}
-
-	private void SetScale(int scale) {
-		Time.timeScale = scale;
-		if (scale == 1) pauseScreen.SetActive(false);
-	}
-
 	public void Resume() {
 		source.Play();
-		GetRectTransform(false);
+	
 		if (sources.Count > 0) sources.Clear();
 
 		sources = FindObjectsOfType<AudioSource>().ToList();
@@ -81,18 +60,7 @@ public class PauseButton : MonoBehaviour {
 		foreach (AudioSource source in sources) {
 			source.UnPause();
 		}
-	}
-
-	public void Settings() {
-		source.Play();
-		RectTransform rect = pauseScreen.GetComponent<RectTransform>().GetChild(0).GetComponent<RectTransform>();
-		rect.localPosition = new Vector3(rect.localPosition.x - 720, rect.localPosition.y, rect.localPosition.z);
-	}
-
-	public void Back() {
-		source.Play();
-		RectTransform rect = pauseScreen.GetComponent<RectTransform>().GetChild(0).GetComponent<RectTransform>();
-		rect.localPosition = new Vector3(rect.localPosition.x + 720, rect.localPosition.y, rect.localPosition.z);
+		Time.timeScale = 1;
 	}
 
 	public void GoToMenu() {

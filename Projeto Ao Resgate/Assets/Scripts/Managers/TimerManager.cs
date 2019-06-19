@@ -12,9 +12,7 @@ public class TimerManager : MonoBehaviour {
 	public TMP_Text timerTxt;
 	public TMP_Text settingsTimerTxt;
 	public TMP_Text shadowTxt;
-
 	public Sprite p1, p2, p3, p4;
-
 	//Instance of the Game Manager
 	GameManager GM;
 	public AudioSource tick;
@@ -22,7 +20,6 @@ public class TimerManager : MonoBehaviour {
 	void Start() {
 		//Get the GameManager
 		GM = GameManager.instance;
-
 		switch (PlayerPrefs.GetInt("power01")) {
 			case 0:
 				GM.power1.enabled = false;

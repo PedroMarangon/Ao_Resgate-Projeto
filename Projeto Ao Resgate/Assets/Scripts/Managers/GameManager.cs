@@ -53,9 +53,7 @@ public class GameManager : MonoBehaviour {
 	/// Do the time's up
 	/// </summary>
 	public void DoTimesUp() {
-
 		end.Play();
-
 		//Pause the game
 		Time.timeScale = 0;
 		//Remove any power-up
